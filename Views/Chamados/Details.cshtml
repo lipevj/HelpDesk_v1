@@ -1,0 +1,116 @@
+﻿@model HelpDeskTCC.Models.Chamados
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Chamados</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChamadosId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChamadosId)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria.Descrição)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria.Descrição)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prioridade.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prioridade.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Statu.Descrição)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Statu.Descrição)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrição)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descrição)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_Abertura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Abertura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Solicitante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Solicitante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prazo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prazo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Responsavel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Responsavel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_Atendimento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Atendimento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_Encerramento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Encerramento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ChamadosId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

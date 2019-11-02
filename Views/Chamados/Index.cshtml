@@ -1,0 +1,79 @@
+﻿@model IEnumerable<HelpDeskTCC.Models.Chamados>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<p>
+    @Html.ActionLink("Chamados em Atendimento", "status_atendidos")
+</p>
+
+<p>
+    @Html.ActionLink("Chamados fechado", "status_fechado")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ChamadosId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria.Descrição)
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prioridade.Nome)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Solicitante)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prazo)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChamadosId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Descrição)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Prioridade.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Solicitante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prazo)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Details", "Details", new { id = item.ChamadosId })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ChamadosId })
+
+            </td>
+        </tr>
+    }
+
+</table>
