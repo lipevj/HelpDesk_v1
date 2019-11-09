@@ -11,11 +11,20 @@
 
     <div class="form-horizontal container">
 
-        <hr/>
+        <hr />
 
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ChamadosId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ChamadosId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ChamadosId, new { htmlAttributes = new { style = "width: 50px", @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.ChamadosId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -69,13 +78,13 @@
             </div>
         </div>
 
-    
+
         <div class="form-group">
-            @*@Html.LabelFor(model => model.Dt_Encerramento, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @*@Html.LabelFor(model => model.Dt_Encerramento, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.HiddenFor(model => model.Dt_Encerramento, new { htmlAttributes = new { style = "width: 120px", @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Dt_Encerramento, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
@@ -87,31 +96,34 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Responsavel, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.Responsavel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
                 @Html.EditorFor(model => model.Responsavel, new { htmlAttributes = new { style = "width: 120px", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Responsavel, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
 
-            @Html.LabelFor(model => model.StatusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.StatusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
                 @Html.DropDownList("StatusId", null, htmlAttributes: new { style = "width: 120px", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
-            </div>
+            </div>*@
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextArea("Comentario", null, new { style = "width: 700px", @class = "form-control", })
                 @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
 
+        <h3> Retornar Ticket para Fila ?</h3>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-info" />
+                <input type="submit" value="Sim" class="btn btn-info" />
+                @Html.ActionLink("Cancelar", "status_atendidos", null, new { @class = "btn btn-info" })
+
             </div>
         </div>
     </div>
@@ -119,7 +131,7 @@
 
 }
 @*<div>
-    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-info" })
+    @Html.ActionLink("Voltar", "status_atendidos", null, new { @class = "btn btn-info" })
 </div>*@
 
 @section Scripts {

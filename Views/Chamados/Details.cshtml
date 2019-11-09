@@ -1,13 +1,14 @@
 ﻿@model HelpDeskTCC.Models.Chamados
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 
-<h2>Details</h2>
+    <h2>Detalhes</h2>
 
 <div>
-    <h4>Chamados</h4>
+ 
+
     <hr />
     <dl class="dl-horizontal">
 
@@ -108,9 +109,17 @@
             @Html.DisplayFor(model => model.Dt_Encerramento)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ChamadosId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@*<p>
+
+    @Html.ActionLink("Voltar", "Index")
+</p>*@

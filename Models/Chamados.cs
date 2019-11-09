@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HelpDeskTCC.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HelpDeskTCC.Models
@@ -46,5 +48,8 @@ namespace HelpDeskTCC.Models
 
         public int StatusId { get; set; }
         public virtual Status Statu { get; set; }
+
+        public String Comentario { get; set; }
+
     }
 }

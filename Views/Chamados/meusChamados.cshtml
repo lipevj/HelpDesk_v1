@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<HelpDeskTCC.Models.Chamados>
 @{
-    ViewBag.Title = "status";
+    ViewBag.Title = "Meus Chamados";
 }
 
+</br>
+<p>
+    @Html.ActionLink("Novo", "Create", null, new { @class = "btn btn-info" }) &nbsp&nbsp&nbsp
 
 
+</p></br>
 
 <table class="table">
     <br />
@@ -21,21 +25,17 @@
         <th>
             @Html.DisplayNameFor(model => model.Titulo)
         </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Solicitante)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Prazo)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Responsavel)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Dt_Atendimento)
-        </th>
+        </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.Comentario)
+            @Html.DisplayNameFor(model => model.Statu.Descrição)
         </th>
 
         <th></th>
@@ -54,27 +54,25 @@
                 @Html.DisplayFor(modelItem => item.Titulo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Solicitante)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Prazo)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Responsavel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Dt_Atendimento)
-            </td>
+            </td>*@
             <th>
-                @Html.DisplayFor(model => item.Comentario)
+                @Html.DisplayFor(model => item.Statu.Descrição)
             </th>
             <td>
-                @if (User.IsInRole("Administrador") || User.IsInRole("Analista"))
-                {
-                @Html.ActionLink("Finalizar", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
-                @Html.ActionLink("Devolver p/ Fila", "Devolver_chamado", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
-                }
+                @*@if (User.IsInRole("Administrador") || User.IsInRole("Analista"))
+                    {
+                        @Html.ActionLink("Finalizar", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Devolver p/ Fila", "Devolver_chamado", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+                    }*@
                 @Html.ActionLink("Detalhes", "Details", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+
 
             </td>
         </tr>

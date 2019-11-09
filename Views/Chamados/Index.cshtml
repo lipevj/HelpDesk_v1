@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<HelpDeskTCC.Models.Chamados>
 
-@{
-    ViewBag.Title = "Index";
-}
+    @{
+        ViewBag.Title = "Index";
+    }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+</br>
 
 <p>
-    @Html.ActionLink("Chamados em Atendimento", "status_atendidos")
-</p>
+    @Html.ActionLink("Novo", "Create", null, new { @class = "btn btn-info" }) &nbsp&nbsp&nbsp
 
-<p>
-    @Html.ActionLink("Chamados fechado", "status_fechado")
-</p>
+    @Html.ActionLink("Em Atendimento", "status_atendidos", null, new { @class = "btn btn-info" }) &nbsp&nbsp&nbsp&nbsp
+
+    @Html.ActionLink("Encerrados", "status_fechado", null, new { @class = "btn btn-info" })
+
+</p></br>
+
+<h4>Aguardando Atendimento</h4></br>
 <table class="table">
     <tr>
 
@@ -66,13 +66,16 @@
                 @Html.DisplayFor(modelItem => item.Prazo)
             </td>
 
-
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-success" })
-                @Html.ActionLink("Details", "Details", new { id = item.ChamadosId })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ChamadosId })
 
-            </td>
+              
+                    @if (User.IsInRole("Administrador") || User.IsInRole("Analista"))
+                    {
+                        @Html.ActionLink("Atender", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+                    }
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+
+                </td>
         </tr>
     }
 

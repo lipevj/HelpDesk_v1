@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HelpDeskTCC.Models;
+using Microsoft.AspNet.Identity;
 
 namespace HelpDeskTCC.Controllers
 {
@@ -18,11 +19,10 @@ namespace HelpDeskTCC.Controllers
         // GET: Chamados
         public ActionResult Index()
         {
-            
-                var chamados = db.Chamados.Include(c => c.Categoria)
-                                          .Include(c => c.Prioridade)
-                                          .Include(c => c.Statu)
-                                          .Where(c => c.Statu.StatusId == 0 && c.Responsavel == null && c.Dt_Atendimento == null && c.Dt_Encerramento == null);
+            var chamados = db.Chamados.Include(c => c.Categoria)
+                                      .Include(c => c.Prioridade)
+                                      .Include(c => c.Statu)
+                                      .Where(c => c.Statu.StatusId == 0 && c.Responsavel == null && c.Dt_Atendimento == null && c.Dt_Encerramento == null);
             //.Where(c => c.Prioridade.PrioridadeId == 1);
 
             //var produtos = context.Produtos
@@ -35,17 +35,21 @@ namespace HelpDeskTCC.Controllers
             return View(chamados.ToList());
         }
 
+
+        //Chamados Atendidos
         public ActionResult status_atendidos()
         {
             var chamados = db.Chamados.Include(c => c.Categoria)
                                       .Include(c => c.Prioridade)
                                       .Include(c => c.Statu)
-                                      .Where(c => c.Statu.StatusId == 0 && c.Responsavel != null);          // 1 = Fechado
-                                                                                                            // 0 = Aberto
+                                      .Where(c => c.Statu.StatusId == 2 && c.Responsavel != null); 
+                                      //.Where(c => c.Statu.StatusId == 0 && c.Responsavel != null);           // 1 = Fechado
+                                                                                                             // 0 = Aberto
 
             return View(chamados.ToList());
         }
 
+        //Chamados Finalizados
         public ActionResult status_fechado()
         {
             var chamados = db.Chamados.Include(c => c.Categoria)
@@ -56,6 +60,22 @@ namespace HelpDeskTCC.Controllers
 
             return View(chamados.ToList());
         }
+
+
+
+        // Meus chamados
+        public ActionResult meusChamados()
+        {
+
+            var usuarioLogado = @User.Identity.GetUserName();
+
+            var chamados = db.Chamados.Include(c => c.Categoria)
+                                      .Include(c => c.Prioridade)
+                                      .Include(c => c.Statu)
+                                      .Where(c => c.Solicitante == usuarioLogado);
+            return View(chamados.ToList());
+        }
+
 
 
         // GET: Chamados/Details/5
@@ -76,9 +96,15 @@ namespace HelpDeskTCC.Controllers
         // GET: Chamados/Create
         public ActionResult Create()
         {
+            //var usuarioLogado = @User.Identity.GetUserName();
+
+            //var chamados = db.Chamados.Include(c => c.Solicitante == usuarioLogado);
+
             ViewBag.CategoriaId = new SelectList(db.Categorias, "CategoriaId", "Descrição");
             ViewBag.PrioridadeId = new SelectList(db.Prioridades, "PrioridadeId", "Nome");
             ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Descrição");
+
+        
             return View();
         }
 
@@ -87,13 +113,16 @@ namespace HelpDeskTCC.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ChamadosId,Titulo,Descrição,Dt_Abertura,Solicitante,PrioridadeId,Prazo,CategoriaId,Responsavel,Dt_Atendimento,Dt_Encerramento,StatusId")] Chamados chamados)
+        public ActionResult Create([Bind(Include = "ChamadosId,Titulo,Descrição,Dt_Abertura,Solicitante,PrioridadeId,Prazo,CategoriaId,Responsavel,Dt_Atendimento,Dt_Encerramento,StatusId,Comentario")] Chamados chamados)
         {
             if (ModelState.IsValid)
             {
+
+             
                 db.Chamados.Add(chamados);
+                
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("meusChamados");
             }
 
             ViewBag.CategoriaId = new SelectList(db.Categorias, "CategoriaId", "Descrição", chamados.CategoriaId);
@@ -103,6 +132,8 @@ namespace HelpDeskTCC.Controllers
         }
 
         // GET: Chamados/Edit/5
+        //[Authorize(Roles = RolesNomes.ADMINISTRADOR)]
+        //[Authorize(Roles = RolesNomes.CLIENTE)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -125,7 +156,7 @@ namespace HelpDeskTCC.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ChamadosId,Titulo,Descrição,Dt_Abertura,Solicitante,PrioridadeId,Prazo,CategoriaId,Responsavel,Dt_Atendimento,Dt_Encerramento,StatusId")] Chamados chamados)
+        public ActionResult Edit([Bind(Include = "ChamadosId,Titulo,Descrição,Dt_Abertura,Solicitante,PrioridadeId,Prazo,CategoriaId,Responsavel,Dt_Atendimento,Dt_Encerramento,StatusId,Comentario")] Chamados chamados)
         {
             if (ModelState.IsValid)
             {
@@ -138,6 +169,62 @@ namespace HelpDeskTCC.Controllers
             ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Descrição", chamados.StatusId);
             return View(chamados);
         }
+
+
+
+
+
+        // GET: Chamados/Devolver_chamado
+        public ActionResult Devolver_chamado(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Chamados chamados = db.Chamados.Find(id);
+            if (chamados == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "CategoriaId", "Descrição", chamados.CategoriaId);
+            ViewBag.PrioridadeId = new SelectList(db.Prioridades, "PrioridadeId", "Nome", chamados.PrioridadeId);
+            ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Descrição", chamados.StatusId);
+            return View(chamados);
+        }
+
+        // POST: Chamados/Devolver_chamado
+        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
+        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Devolver_chamado([Bind(Include = "ChamadosId,Titulo,Descrição,Dt_Abertura,Solicitante,PrioridadeId,Prazo,CategoriaId,Responsavel,Dt_Atendimento,Dt_Encerramento,StatusId,Comentario")] Chamados chamados)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(chamados).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "CategoriaId", "Descrição", chamados.CategoriaId);
+            ViewBag.PrioridadeId = new SelectList(db.Prioridades, "PrioridadeId", "Nome", chamados.PrioridadeId);
+            ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Descrição", chamados.StatusId);
+            return View(chamados);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Chamados/Delete/5
         public ActionResult Delete(int? id)

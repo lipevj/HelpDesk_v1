@@ -3,10 +3,11 @@
     ViewBag.Title = "status";
 }
 
-<h2>status</h2>
-
 
 <table class="table">
+    <br />
+    <h4>Chamados Encerrados</h4>
+    <br />
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ChamadosId)
@@ -29,6 +30,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Dt_Encerramento)
         </th>
+
         <th></th>
     </tr>
 
@@ -56,10 +58,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Dt_Encerramento)
             </td>
+
+
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ChamadosId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ChamadosId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ChamadosId })
+                @Html.ActionLink("Editar", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+
             </td>
         </tr>
     }

@@ -17,6 +17,5 @@ namespace HelpDeskTCC.Models
 
         public System.Data.Entity.DbSet<HelpDeskTCC.Models.Status> Status { get; set; }
 
-
     }
 }
