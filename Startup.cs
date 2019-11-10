@@ -99,14 +99,14 @@ namespace HelpDeskTCC
             using (var roleStore = new RoleStore<IdentityRole>(dbContext))
             using (var roleManager = new RoleManager<IdentityRole>(roleStore))
             {
-                if (!roleManager.RoleExists(RolesNomes.ADMINISTRADOR))
-                    roleManager.Create(new IdentityRole(RolesNomes.ADMINISTRADOR));
+                if (!roleManager.RoleExists("Administrador"))
+                    roleManager.Create(new IdentityRole("Administrador"));
 
-                if (!roleManager.RoleExists(RolesNomes.ANALISTA))
-                    roleManager.Create(new IdentityRole(RolesNomes.ANALISTA));
+                if (!roleManager.RoleExists("Analista"))
+                    roleManager.Create(new IdentityRole("Analista"));
 
-                if (!roleManager.RoleExists(RolesNomes.CLIENTE))
-                    roleManager.Create(new IdentityRole(RolesNomes.CLIENTE)) ;
+                if (!roleManager.RoleExists("Cliente"))
+                    roleManager.Create(new IdentityRole("Cliente")) ;
             }
         }
 
@@ -130,7 +130,7 @@ namespace HelpDeskTCC
                 userManager.Create(administrador,
                     ConfigurationManager.AppSettings["admin:senha"]);
 
-                userManager.AddToRole(administrador.Id, RolesNomes.ADMINISTRADOR);
+                userManager.AddToRole(administrador.Id, "Administrador");
 
             }
         }

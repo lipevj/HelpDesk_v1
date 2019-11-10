@@ -177,7 +177,6 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\UsuarioAplicacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RolesNomes.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ContaConfirmacaoAlteracaoSenhaViewModel.cs" />
     <Compile Include="ViewModels\ContaEsqueciSenhaViewModel.cs" />

@@ -46,6 +46,7 @@ namespace HelpDeskTCC.Controllers
 
 
         //Chamados Atendidos
+
         public ActionResult status_atendidos()
         {
             var usuarioLogado = @User.Identity.GetUserName();
@@ -65,6 +66,7 @@ namespace HelpDeskTCC.Controllers
         }
 
         //Chamados Finalizados
+        [Authorize(Roles ="Administrador, Analista")]
         public ActionResult status_fechado()
         {
             var chamados = db.Chamados.Include(c => c.Categoria)
@@ -79,6 +81,7 @@ namespace HelpDeskTCC.Controllers
 
 
         // Meus chamados
+        [Authorize(Roles ="Cliente")]
         public ActionResult meusChamados()
         {
 
@@ -125,6 +128,7 @@ namespace HelpDeskTCC.Controllers
         }
 
         // GET: Chamados/Create
+        [Authorize(Roles ="Cliente")]
         public ActionResult Create()
         {
           
@@ -141,6 +145,7 @@ namespace HelpDeskTCC.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Cliente")]
         public ActionResult Create([Bind(Include = "ChamadosId,Titulo,Descrição,Dt_Abertura,Solicitante,PrioridadeId,Prazo,CategoriaId,Responsavel,Dt_Atendimento,Dt_Encerramento,StatusId,Comentario")] Chamados chamados)
         {
             if (ModelState.IsValid)
@@ -164,8 +169,7 @@ namespace HelpDeskTCC.Controllers
         }
 
         // GET: Chamados/Edit/5
-        //[Authorize(Roles = RolesNomes.ADMINISTRADOR)]
-        //[Authorize(Roles = RolesNomes.CLIENTE)]
+        [Authorize(Roles ="Administrador, Analista")]
         public ActionResult Edit(int? id)
         {
             if (id == null)

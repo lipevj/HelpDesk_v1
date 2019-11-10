@@ -7,14 +7,18 @@
 
 </br>
 
-<p>
-    @Html.ActionLink("Novo", "Create", null, new { @class = "btn btn-info" }) &nbsp&nbsp&nbsp
+    <p>
+        @if (User.IsInRole("Cliente"))
+        {
+            @Html.ActionLink("Novo", "Create", null, new { @class = "btn btn-info" })
 
-    @Html.ActionLink("Em Atendimento", "status_atendidos", null, new { @class = "btn btn-info" }) &nbsp&nbsp&nbsp&nbsp
+        }
 
-    @Html.ActionLink("Encerrados", "status_fechado", null, new { @class = "btn btn-info" })
+        @Html.ActionLink("Em Atendimento", "status_atendidos", null, new { @class = "btn btn-info" }) &nbsp&nbsp&nbsp&nbsp
 
-</p></br>
+        @Html.ActionLink("Encerrados", "status_fechado", null, new { @class = "btn btn-info" })
+
+    </p></br>
 
 <h4>Aguardando Atendimento</h4></br>
 <table class="table">

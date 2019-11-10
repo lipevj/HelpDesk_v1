@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace HelpDeskTCC.Controllers
 {
-    [Authorize(Roles = RolesNomes.ADMINISTRADOR)]
+    [Authorize(Roles = "Administrador")]
     public class UsuarioController : Controller
     {
 
