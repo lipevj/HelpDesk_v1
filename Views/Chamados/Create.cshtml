@@ -35,11 +35,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Solicitante, new { @class = "control-label col-md-1" })
             <div class="col-md-10">
-              
-                @User.Identity.GetUserName()
-                @Html.EditorFor(model => model.Solicitante, new { htmlAttributes = new { style = "width: 300px", @class = "form-control" } })
-                @*@Html.DropDownList("Solicitante", null, htmlAttributes: new { style = "width: 300px", @class = "form-control" })*@
-                @Html.ValidationMessageFor(model => model.Solicitante, "", new { @class = "text-danger" })
+
+                @*@Html.EditorFor(model => User.Identity.Name, new { htmlAttributes = new { style = "width: 300px", @class = "form-control" } })*@
+                @Html.EditorFor(model =>User.Identity.Name, new { htmlAttributes = new { style = "width: 300px", @class = "form-control", @readonly = "readonly"} })
+
             </div>
         </div>
 

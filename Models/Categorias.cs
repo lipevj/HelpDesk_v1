@@ -11,7 +11,7 @@ namespace HelpDeskTCC.Models
 
 
         [Display(Name = "Categoria")]
-        public String Descrição { get; set; }
+        public String Descrição { get; set; } 
 
 
         public virtual ICollection<Chamados> chamado { get; set; }

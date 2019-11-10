@@ -1,13 +1,17 @@
-﻿using System;
+﻿using HelpDeskTCC.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Windows.Input;
 
 namespace HelpDeskTCC.ViewModels
 {
     public class ContaRegistrarViewModel
-    {
+    {   
+        
+        
         [Required]
         public string UserName { get; set; }
 
@@ -22,6 +26,7 @@ namespace HelpDeskTCC.ViewModels
         [Required]
         [DataType(DataType.Password)]
         public string Senha { get; set; }
+
 
     }
 }

@@ -113,7 +113,7 @@ namespace HelpDeskTCC.Controllers
             var resultado = await UserManager.ConfirmEmailAsync(usuarioId, codigo);
 
             if (resultado.Succeeded)
-                return View("EmailConfirmado");
+                return RedirectToAction("Index", "Home");
             else
                 return View("Error");
         }

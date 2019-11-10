@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections;
+using System.Data.Entity;
 
 namespace HelpDeskTCC.Models
 {
@@ -16,6 +17,7 @@ namespace HelpDeskTCC.Models
         public System.Data.Entity.DbSet<HelpDeskTCC.Models.Chamados> Chamados { get; set; }
 
         public System.Data.Entity.DbSet<HelpDeskTCC.Models.Status> Status { get; set; }
+        public IEnumerable ContaRegistrarViewModel { get; internal set; }
 
     }
 }

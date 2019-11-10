@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using HelpDeskTCC.Models;
 using Microsoft.AspNet.Identity;
+
 
 namespace HelpDeskTCC.Controllers
 {
@@ -19,10 +21,15 @@ namespace HelpDeskTCC.Controllers
         // GET: Chamados
         public ActionResult Index()
         {
+            var usuarioLogado = @User.Identity.GetUserName();
             var chamados = db.Chamados.Include(c => c.Categoria)
                                       .Include(c => c.Prioridade)
                                       .Include(c => c.Statu)
-                                      .Where(c => c.Statu.StatusId == 0 && c.Responsavel == null && c.Dt_Atendimento == null && c.Dt_Encerramento == null);
+                                      .Where(c => c.Statu.StatusId == 0 
+                                                && c.Responsavel == null 
+                                                && c.Dt_Atendimento == null 
+                                                && c.Dt_Encerramento == null
+                                          );
             //.Where(c => c.Prioridade.PrioridadeId == 1);
 
             //var produtos = context.Produtos
@@ -30,21 +37,29 @@ namespace HelpDeskTCC.Controllers
             //   .Include(p => p.Categoria)
             //   .Where(p => p.Categoria.Nome == "Calçados" && p.Fabricante.Nome != "Adidas")
             //   .ToList();
-                   
 
-            return View(chamados.ToList());
+
+            return View(chamados);
+
+            //return View(chamados.ToList());
         }
 
 
         //Chamados Atendidos
         public ActionResult status_atendidos()
         {
+            var usuarioLogado = @User.Identity.GetUserName();
             var chamados = db.Chamados.Include(c => c.Categoria)
                                       .Include(c => c.Prioridade)
                                       .Include(c => c.Statu)
-                                      .Where(c => c.Statu.StatusId == 2 && c.Responsavel != null); 
-                                      //.Where(c => c.Statu.StatusId == 0 && c.Responsavel != null);           // 1 = Fechado
-                                                                                                             // 0 = Aberto
+                                      .Where(c => c.Statu.StatusId == 2
+                                       && c.Responsavel == usuarioLogado 
+                                       || usuarioLogado == "Administrador" 
+                                       && c.Dt_Atendimento != null
+                                       && c.Dt_Encerramento == null);
+                                 
+                                      //.Where(c => c.Statu.StatusId == 0 && c.Responsavel != null);             // 1 = Fechado
+                                                                                                                 // 0 = Aberto
 
             return View(chamados.ToList());
         }
@@ -77,6 +92,22 @@ namespace HelpDeskTCC.Controllers
         }
 
 
+        // Meus atendimentos(Analista)
+        public ActionResult meusAtendimentos()
+        {
+
+            var usuarioLogado = @User.Identity.GetUserName();
+
+            var chamados = db.Chamados.Include(c => c.Categoria)
+                                      .Include(c => c.Prioridade)
+                                      .Include(c => c.Statu)
+                                      .Where(c => c.Solicitante == usuarioLogado);
+            return View(chamados.ToList());
+
+
+        }
+
+
 
         // GET: Chamados/Details/5
         public ActionResult Details(int? id)
@@ -96,15 +127,12 @@ namespace HelpDeskTCC.Controllers
         // GET: Chamados/Create
         public ActionResult Create()
         {
-            //var usuarioLogado = @User.Identity.GetUserName();
-
-            //var chamados = db.Chamados.Include(c => c.Solicitante == usuarioLogado);
-
+          
             ViewBag.CategoriaId = new SelectList(db.Categorias, "CategoriaId", "Descrição");
             ViewBag.PrioridadeId = new SelectList(db.Prioridades, "PrioridadeId", "Nome");
             ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Descrição");
 
-        
+           
             return View();
         }
 
@@ -117,17 +145,21 @@ namespace HelpDeskTCC.Controllers
         {
             if (ModelState.IsValid)
             {
-
-             
+                chamados.Solicitante = User.Identity.Name;
                 db.Chamados.Add(chamados);
                 
                 db.SaveChanges();
                 return RedirectToAction("meusChamados");
             }
 
+
             ViewBag.CategoriaId = new SelectList(db.Categorias, "CategoriaId", "Descrição", chamados.CategoriaId);
             ViewBag.PrioridadeId = new SelectList(db.Prioridades, "PrioridadeId", "Nome", chamados.PrioridadeId);
             ViewBag.StatusId = new SelectList(db.Status, "StatusId", "Descrição", chamados.StatusId);
+            //var usuarioLogado = @User.Identity.GetUserName();
+            
+
+
             return View(chamados);
         }
 
@@ -160,6 +192,7 @@ namespace HelpDeskTCC.Controllers
         {
             if (ModelState.IsValid)
             {
+                chamados.Responsavel = User.Identity.Name;
                 db.Entry(chamados).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

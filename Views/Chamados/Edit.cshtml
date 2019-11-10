@@ -89,8 +89,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Responsavel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
-                @Html.EditorFor(model => model.Responsavel, new { htmlAttributes = new { style = "width: 120px", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Responsavel, "", new { @class = "text-danger" })
+                @*@Html.EditorFor(model => model.Responsavel, new { htmlAttributes = new { style = "width: 120px", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Responsavel, "", new { @class = "text-danger" })*@
+                @Html.EditorFor(model => User.Identity.Name, new { htmlAttributes = new { style = "width: 300px", @class = "form-control", @readonly = "readonly" } })
+
             </div>
 
             @Html.LabelFor(model => model.StatusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -111,7 +113,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-info" />
+                <input type="submit" value="Atender" class="btn btn-info" />
             </div>
         </div>
     </div>

@@ -28,56 +28,61 @@
         <th>
             @Html.DisplayNameFor(model => model.Prazo)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Responsavel)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Dt_Atendimento)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comentario)
-        </th>
 
-        <th></th>
-    </tr>
+      
+
+            <th>
+                @Html.DisplayNameFor(model => model.Responsavel)
+            </th>
+        
+
+            <th></th>
+        </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChamadosId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Descrição)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Solicitante)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prazo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Responsavel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dt_Atendimento)
-            </td>
-            <th>
-                @Html.DisplayFor(model => item.Comentario)
-            </th>
-            <td>
-                @if (User.IsInRole("Administrador") || User.IsInRole("Analista"))
-                {
-                @Html.ActionLink("Finalizar", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
-                @Html.ActionLink("Devolver p/ Fila", "Devolver_chamado", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
-                }
-                @Html.ActionLink("Detalhes", "Details", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ChamadosId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Categoria.Descrição)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Titulo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Solicitante)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Prazo)
+    </td>
 
-            </td>
-        </tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Dt_Atendimento)
+    </td>
+
+    @if (User.IsInRole("Administrador"))
+    {
+        <td>
+            @Html.DisplayFor(modelItem => item.Responsavel)
+        </td>
+    }
+        <td>
+            @if (User.IsInRole("Administrador") || User.IsInRole("Analista"))
+            {
+                @Html.ActionLink("Finalizar", "Edit", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+
+                @Html.ActionLink("Devolver p/ Fila", "Devolver_chamado", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+            }
+            @Html.ActionLink("Detalhes", "Details", new { id = item.ChamadosId }, new { @class = "btn btn-info" })
+
+        </td>
+    </tr>
 
     }
 </table>

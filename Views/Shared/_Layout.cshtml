@@ -31,18 +31,21 @@
                         {
                             <li>@Html.ActionLink("Administracao", "Index", "Administracao")</li>
                             <li>@Html.ActionLink("Usuario", "Index", "Usuario")</li>
-
+                            <li>@Html.ActionLink("Chamados", "Index", "Chamados")</li>
 
                         }
                         @if (User.IsInRole("Analista"))
-                        { 
-                             <li>@Html.ActionLink("Chamados", "Index", "Chamados")</li>
+                        {
+                            <li>@Html.ActionLink("Chamados", "Index", "Chamados")</li>
+                            @*<li>@Html.ActionLink("Meus Atendimentos", "meusAtendimentos", "Chamados")</li>*@
                         }
 
-                        <li>@Html.ActionLink("Meus Chamados", "meusChamados", "Chamados")</li>
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            <li>@Html.ActionLink("Meus Chamados", "meusChamados", "Chamados")</li>
+                        }
 
-
-                    </ul>
+                        </ul>
 
                     <ul class="nav navbar-nav navbar-right">
 

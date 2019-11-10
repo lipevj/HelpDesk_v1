@@ -20,7 +20,7 @@ namespace HelpDeskTCC.Models
         public string Descrição { get; set; }
         public String Dt_Abertura { get; set; }
 
-        [Required(ErrorMessage = "Solicitante Obrigatorio")]
+        //[Required(ErrorMessage = "Solicitante Obrigatorio")]
         public String Solicitante { get; set; }
 
         internal static object FromSqlRaw(string v)
@@ -28,6 +28,7 @@ namespace HelpDeskTCC.Models
             throw new NotImplementedException();
         }
 
+        [Required]
         public int PrioridadeId { get; set; }
         public virtual Prioridades Prioridade { get; set; }
 
@@ -35,7 +36,7 @@ namespace HelpDeskTCC.Models
         [Display(Name = "Prazo Encerramento")]
         public String Prazo { get; set; }
 
-
+        [Required]
         public int CategoriaId { get; set; }
         public virtual Categorias Categoria { get; set; }
 
